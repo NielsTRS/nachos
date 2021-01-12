@@ -26,6 +26,8 @@ HOST_CC:=$(firstword \
 HOST_CXX=$(firstword \
 	$(shell which i686-linux-gnu-g++) \
 	g++)
+# switch.S is not writen with PIE support, do disabling it
+HOST_LDFLAGS+=-no-pie
 
 # MIPS_CC (and other similar variables) is the compiler used to
 # produce mipsel code
