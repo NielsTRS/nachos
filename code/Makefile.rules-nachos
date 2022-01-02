@@ -287,7 +287,7 @@ userprog-get-SFILES=$(foreach e,c S,$(patsubst %.$e,%.s,$(filter %.$e,$(call use
 userprog-get-OSFILES=$(userprog-get-OFILES) $(userprog-get-SFILES)
 
 define define-userprog # 1:name 2:sources
-  userprog_$1_SOURCES=$$(sort $2 start.S)
+  userprog_$1_SOURCES=$$(sort $2)
   USERPROGS_LIST:=$$(USERPROGS_LIST) $1
 endef
 
@@ -307,14 +307,20 @@ endef
 #include $(topsrc_dir)/Makefile.define-flavors
 #include $(topsrc_dir)/Makefile.define-userprogs
 include $(topsrc_dir)/Makefile.define-origin
-# defining original programs
+# defining original programs. Only one C source file and (start.S for all)
 $(foreach p,$(ORIG_USERPROGS),\
   $(eval $(call define-userprog,$p,$p.c start.S)))
 
 # defining extra programs
+# extra programs are all C files that:
+# - are not listed in USERPROG_NOPROGRAM
+# - are not listed in USERPROG_LIBS
+# - and are not one of ORIG_USERPROGS
+# Note: start.S is in USERPROG_LIBS by default, as is libgcc.c
+# that contains functions that can be used by gcc generated code.
 include $(topsrc_dir)/Makefile.define-user
 $(foreach p,$(patsubst %.c,%,\
-		$(filter-out $(USERPROG_NOPROGRAM) \
+		$(filter-out $(USERPROG_NOPROGRAM) $(USERPROG_LIBS) \
 			$(addsuffix .c,$(ORIG_USERPROGS)),\
 		$(shell find ../test -iname "*.c" -printf "%P\n"))),\
 	$(eval $(call define-userprog,$p,\

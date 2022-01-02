@@ -14,11 +14,17 @@
 #                      USERSPACE PROGRAMS                                 #
 ###########################################################################
 # List of C files that are not userspace programs (in test/ subdirectory)
-# => add here C files that are user-space libraries
-# all other C files will be compiled as a userspace nachos program
-USERPROG_NOPROGRAM=libgcc.c
+# Note that files declared into USERPROG_LIBS do not need to be
+# redeclared here
+# All other C files will be compiled as a userspace nachos program
+USERPROG_NOPROGRAM=
 
-# source files that must be included in any userspace nachos program
+# source files that must be included in all userspace nachos program
+# Note: as for USERPROG_NOPROGRAM, they won't be compiled into a
+#  standalone program.
+# IMPORTANT: the 4 original user programs (halt, ...) cannot have extra
+#  sources and will always be linked only with start.S (USERPROG_LIBS
+#  and ..._EXTRA_SOURCES are ignored for them)
 USERPROG_LIBS=start.S libgcc.c
 
 # each program 'p' can specify extra sources in 'p'_EXTRA_SOURCES
@@ -29,14 +35,10 @@ USERPROG_LIBS=start.S libgcc.c
 # be linked in each program. Moreover, 'bigtest' is a big program
 # built from bigtest.c and bigtest_extra.c (and nachos-libc.c and
 # start.S of course)
-# USERPROG_NOPROGRAM    = nachos-libc.c bigtest_extra.c
-# USERPROG_LIBS         = start.S nachos-libc.c
+# USERPROG_NOPROGRAM    = bigtest_extra.c
+# USERPROG_LIBS         = start.S libgcc.c nachos-libc.c
 # bigtest_EXTRA_SOURCES = bigtest_extra.c
 
-
-# IMPORTANT: the 4 original user programs (halt, ...) cannot have extra
-# sources and will always be linked only with start.S (USERPROG_LIBS
-# and ..._EXTRA_SOURCES are ignored for them)
 
 ###########################################################################
 #                        NACHOS KERNELS                                   #
