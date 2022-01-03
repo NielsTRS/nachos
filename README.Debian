@@ -25,6 +25,30 @@
 
 set -e
 
+SUCCESS=no
+
+end() {
+	if [ "$SUCCESS" = yes ]; then
+		cat 1>&2 <<EOF
+****************************************************
+* SUCCESS                                          *
+* The cross-compiler should be correctly installed *
+****************************************************
+EOF
+		return
+	fi
+	cat 1>&2 <<EOF
+*************************************************
+* Error: something goes wrong.                  *
+* The installation of the cross-compiler fails. *
+* Fix the problem before restarting this script *
+* or ask for help.                              *
+*************************************************
+EOF
+}
+
+trap end EXIT
+
 # either this script must be called as root or the user must be
 # able to use sudo
 if [ "$(whoami)" = root ]; then
@@ -132,6 +156,8 @@ else
 		install_package --no-update "$PACKAGES linux-libc-dev:i386" \
 			"in order to compile NachOS on amd64 systems" gcc-mipsel-linux-gnu
 	fi
+
+	SUCCESS=yes
 
 	echo "Ok, you should be able to compile NachOS"
 
