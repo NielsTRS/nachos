@@ -8,7 +8,12 @@ export DEFAULT_VERBOSITY
 GIT_INIT_COMMIT:=$(shell git rev-list --max-parents=0 HEAD)
 ifeq ($(GIT_INIT_COMMIT),a8550946e865bff4dd452841e71b23387243de51)
 else
+# gitlab CI does checkouts with a depth of 50...
+ifeq ($(shell git rev-parse --is-shallow-repository),true)
+$(warning partial git checkout (shallow repository). Assuming ok)
+else
 $(error Your git does not seem to be correctly setup. Aborting.)
+endif
 endif
 
 # By default, build the check target so that we check that initial
