@@ -10,6 +10,7 @@ FROM debian:bullseye
 
 ADD README.Debian /tmp
 
-RUN apt-get -y update && apt-get -y full-upgrade && apt-get -y install build-essential
+RUN apt-get -y update && apt-get -y full-upgrade && apt-get -y install build-essential git vim nano
 RUN /tmp/README.Debian --force && rm /tmp/README.Debian
+RUN apt-get -y install valgrind gdb libc6-dbg:i386
 
