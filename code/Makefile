@@ -1,6 +1,6 @@
 # Copyright (c) 2011 Vincent Danjean <Vincent.Danjean@imag.fr>
 
-DEFAULT_VERBOSITY=0
+DEFAULT_VERBOSITY=1
 export DEFAULT_VERBOSITY
 
 .PHONY: all clean depend print build check mips-progs bin
