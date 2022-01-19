@@ -46,16 +46,6 @@ LDLIBS+=$($(TG)LDLIBS)
 
 ###########################################################################
 
-# Set default make verbosity
-# By default, show only summary
-DEFAULT_VERBOSITY?=0
-# Default setting can be overruled with 'V=x' on make invocation
-# Ie: make V=2
-# Possible values are :
-#   0: show summary
-#   1: show only main commands
-#   2: show all commands
-
 # define some messages depending on the verbosity
 dep_V = $(dep_V_$(V))
 dep_V_ = $(dep_V_$(DEFAULT_VERBOSITY))

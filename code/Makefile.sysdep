@@ -8,6 +8,16 @@
 #
 # Depending on your platform, you need to select the correct definition.
 
+# Set default make verbosity
+# By default, show only summary
+DEFAULT_VERBOSITY?=1
+# Default setting can be overruled with 'V=x' on make invocation
+# Ie: make V=2
+# Possible values are :
+#   0: show summary
+#   1: show only main commands
+#   2: show all commands
+
 # Remove -Werror if this is a too big constraint
 CPPFLAGS+=-Wall -Wshadow -Werror
 CFLAGS+=-g
