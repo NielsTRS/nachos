@@ -31,10 +31,10 @@ CXXFLAGS+=-g
 HOST_TARGET_ARCH=-m32
 HOST_TARGET_MACH=-m32
 HOST_CC:=$(firstword \
-	$(shell command -v i686-linux-gnu-gcc) \
+	$(shell $(SHELL) -c "command -v i686-linux-gnu-gcc") \
 	gcc)
 HOST_CXX=$(firstword \
-	$(shell command -v i686-linux-gnu-g++) \
+	$(shell $(SHELL) -c "command -v i686-linux-gnu-g++") \
 	g++)
 # switch.S is not writen with PIE support, do disabling it
 HOST_LDFLAGS+=-no-pie
