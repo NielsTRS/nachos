@@ -113,3 +113,6 @@ endif # SOLARIS_SYS
 # slight variant for 386 FreeBSD
 # HOST = -DHOST_i386 -DFreeBSD
 # CPP=/usr/bin/cpp
+
+# remove partial target build on error
+.DELETE_ON_ERROR:

@@ -21,6 +21,7 @@ all: build
 
 build: bin
 	$(MAKE) -C $@
+	@echo "******* Success: 2023 Nachos project compiled"
 
 .PHONY: bin
 bin:

@@ -24,7 +24,7 @@ vpath %.S $(call buildvpath,machine threads userprog filesys network vm)
 vpath %.c $(topsrc_dir)/test
 vpath %.S $(topsrc_dir)/test
 
-all:
+all: check-sources
 .PHONY: all
 
 # Set the compiler to use depending on the value of the TARGET variable
@@ -325,4 +325,29 @@ $(foreach s,$(SERIES),\
 
 $(foreach f,$(sort $(UFLAVORS_LIST)),\
   $(eval $(call nachos-userprog-obj-rules,$f)))
+
+.PHONY: check-sources
+
+clean::
+	$(RM) .sources-checked
+
+check-sources: .sources-checked
+
+CHECKED_FILES=\
+	$(addprefix $(topsrc_dir)/,Makefile Makefile.define-origin Makefile.rules-nachos Makefile.sysdep) \
+	$(wildcard $(topsrc_dir)/machine/*.h machine/*.cc)
+
+.sources-checked: $(topsrc_dir)/machine/machine.h $(CHECKED_FILES)
+	@touch $@
+	@if ! ( grep -v NumPhysPages $< ; echo "$(sort $^)"; ) | md5sum --quiet -c $(topsrc_dir)/sources.md5sum; then \
+		echo 2>&1 "ERROR: some files that MUST NOT be modified have changed" ;\
+		echo 2>&1 "ERROR: Aborting." ;\
+		exit 1;\
+	fi
+	@echo "Sources checked"
+
+ifeq (1,$(GEN_SOURCES_MD5SUM))
+$(topsrc_dir)/sources.md5sum: $(topsrc_dir)/machine/machine.h $(CHECKED_FILES)
+	( grep -v NumPhysPages $< ; echo "$(sort $^)"; ) | md5sum - $(filter-out $<,$^) > $@
+endif
 
