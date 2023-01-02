@@ -14,3 +14,4 @@ RUN apt-get -y update && apt-get -y full-upgrade && apt-get -y install build-ess
 RUN /tmp/README.Debian --force && rm /tmp/README.Debian
 RUN apt-get -y install valgrind gdb libc6-dbg:i386
 
+CMD ["/bin/bash","--login"]
