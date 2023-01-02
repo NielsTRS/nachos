@@ -38,6 +38,8 @@ HOST_CXX=$(firstword \
 	g++)
 # switch.S is not writen with PIE support, do disabling it
 HOST_LDFLAGS+=-no-pie
+# .note.GNU-stack is not present. Disabling the executable stack warning
+HOST_LDFLAGS+=-z noexecstack
 
 # MIPS_CC (and other similar variables) is the compiler used to
 # produce mipsel code
