@@ -1,7 +1,7 @@
 16bbaa6527d637054a3d6fb86565934a  -
 97151b882cc1f56768e93e3ee333463a  ../Makefile
 c91c62796d511930602b794c3c64a191  ../Makefile.define-origin
-3c40ac3851f36f2198f1e8ee712540f0  ../Makefile.rules-nachos
+3eeadebdd7bcf187d635084029906fc3  ../Makefile.rules-nachos
 a741e349c42733b65b549c359a35ee14  ../Makefile.sysdep
 8d8ada8aa951d5b8233a932f404420fd  ../machine/console.h
 63f12bcd2b4e139f8287eabbb223d068  ../machine/disk.h

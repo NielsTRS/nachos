@@ -338,13 +338,26 @@ CHECKED_FILES=\
 	$(wildcard $(topsrc_dir)/machine/*.h machine/*.cc)
 
 .sources-checked: $(topsrc_dir)/machine/machine.h $(CHECKED_FILES)
+ifeq ($(FORCE_COMPILATION),)
 	@touch $@
 	@if ! ( grep -v NumPhysPages $< ; echo "$(sort $^)"; ) | md5sum --quiet -c $(topsrc_dir)/sources.md5sum; then \
+		echo 2>&1 '*******************************************************' ;\
 		echo 2>&1 "ERROR: some files that MUST NOT be modified have changed" ;\
 		echo 2>&1 "ERROR: Aborting." ;\
+		echo 2>&1 "" ;\
+		echo 2>&1 "    NOTE: If you really want to compile" ;\
+		echo 2>&1 "    NOTE: (to test a temporary change in an immuable file)" ;\
+		echo 2>&1 "    NOTE: add FORCE_COMPILATION=1 to make invocation:" ;\
+		echo 2>&1 '    NOTE: $$ make FORCE_COMPILATION=1 ...' ;\
+		echo 2>&1 '*******************************************************' ;\
 		exit 1;\
 	fi
 	@echo "Sources checked"
+else
+	@echo 2>&1 '/**************************************************\'
+	@echo 2>&1 '| FORCED COMPILATION. NOT CHECKING IMMUABLE FILES. |'
+	@echo 2>&1 '\**************************************************/'
+endif
 
 ifeq (1,$(GEN_SOURCES_MD5SUM))
 $(topsrc_dir)/sources.md5sum: $(topsrc_dir)/machine/machine.h $(CHECKED_FILES)
