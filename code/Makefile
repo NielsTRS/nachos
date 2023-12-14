@@ -53,7 +53,7 @@ print:
 	done > list
 	$(LPR) `cat list` 
 
-INDENT	:= indent --indent-level4
+INDENT	:= clang-format -style="{BasedOnStyle: llvm, IndentWidth: 4}" -i
 DIRS_INDENT	:= threads userprog test
 
 indent:
